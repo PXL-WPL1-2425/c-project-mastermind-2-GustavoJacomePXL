@@ -130,8 +130,7 @@ namespace Mastermind_project_WPL1
             if (selectedColors.SequenceEqual(targetColors))
             {
                 stopCountdown();
-                MessageBox.Show("Code gekraakt in " + attempts + " pogingen", "WINNER");
-                this.Close();
+                askToPlayAgain($"Gefeliciteerd! Je hebt de code gekraakt in {attempts} pogingen.");
                 return;
             }
 
@@ -272,10 +271,9 @@ namespace Mastermind_project_WPL1
         // Methode om de window title te updaten
         private void updateWindowTitle()
         {
-            if (attempts >= 10)
+            if (attempts > 10)
             {
-                MessageBox.Show("Je hebt verloren! De code was: " + targetColorCode, "FAILED");
-                this.Close();
+                askToPlayAgain($"Je hebt verloren! De code was: {targetColorCode}");
                 return;
             }
             else
@@ -324,10 +322,9 @@ namespace Mastermind_project_WPL1
         {
 
             // Controleer of het maximum aantal pogingen is bereikt
-            if (attempts >= 10)
+            if (attempts > 10)
             {
-                MessageBox.Show("Je hebt verloren! De code was: " + targetColorCode, "FAILED");
-                this.Close();
+                askToPlayAgain($"Je hebt verloren! De code was: {targetColorCode}");
                 return;
             }
             else
@@ -336,12 +333,64 @@ namespace Mastermind_project_WPL1
                 MessageBox.Show("Tijd voorbij! Je hebt je beurt verloren.", "Beurt Verloren", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
-            // Verhoog het aantal pogingen
             attempts++;
 
             startCountdown();
 
             updateWindowTitle();
         }
+
+        private void resetGame()
+        {
+            attempts = 1;
+            remainingTime = 10;
+
+            targetColorCode = generateRandomColorCode();
+            debugTextBox.Text = debugMode ? targetColorCode : "";
+
+            comboBox1.SelectedIndex = -1;
+            comboBox2.SelectedIndex = -1;
+            comboBox3.SelectedIndex = -1;
+            comboBox4.SelectedIndex = -1;
+
+            resetLabelsAndBorders();
+
+            attemptsListBox.Items.Clear();
+
+            scoreLabel.Content = "Score: 0 strafpunten";
+
+            startCountdown();
+
+            updateWindowTitle();
+        }
+
+        private void resetLabelsAndBorders()
+        {
+            Label[] labels = { label1, label2, label3, label4 };
+
+            foreach (Label label in labels)
+            {
+                label.Content = "";
+                label.Background = Brushes.Transparent;
+                label.BorderBrush = Brushes.Transparent;
+                label.BorderThickness = new Thickness(0);
+            }
+        }
+
+        private void askToPlayAgain(string message)
+        {
+            MessageBoxResult result = MessageBox.Show(message + "\nWil je opnieuw spelen?", "Nog een spel?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                resetGame();
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
+        }
+
+
     }
 }
