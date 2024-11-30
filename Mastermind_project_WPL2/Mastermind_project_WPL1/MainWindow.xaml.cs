@@ -135,6 +135,8 @@ namespace Mastermind_project_WPL1
                 return;
             }
 
+            calculateScore(selectedColors, targetColors);
+
             // Maak een array van booleans om bij te houden welke kleuren al als correct gemarkeerd zijn
             bool[] correctPositions = new bool[4];
             Array.Fill(correctPositions, false);
@@ -233,6 +235,39 @@ namespace Mastermind_project_WPL1
                 label.BorderThickness = new Thickness(0);
             }
         }
+
+        private void calculateScore(string[] selectedColors, string[] targetColors)
+        {
+            int totalScore = 0;
+
+            // Boolean array om bij te houden welke kleuren al correct of incorrect zijn gemarkeerd
+            bool[] matched = new bool[4];
+            Array.Fill(matched, false);
+
+            // Strafpunten berekenen
+            for (int i = 0; i < 4; i++)
+            {
+                if (selectedColors[i] == targetColors[i])
+                {
+                    // 0 strafpunten voor een correcte kleur op de juiste plaats
+                    matched[i] = true;
+                }
+                else if (targetColors.Contains(selectedColors[i]) && !matched[i])
+                {
+                    // 1 strafpunt voor een correcte kleur op de verkeerde plaats
+                    totalScore += 1;
+                }
+                else
+                {
+                    // 2 strafpunten voor een kleur die niet voorkomt in de code
+                    totalScore += 2;
+                }
+            }
+
+            // Score weergeven in het label
+            scoreLabel.Content = $"Score: {totalScore} strafpunten";
+        }
+
 
         // Methode om de window title te updaten
         private void updateWindowTitle()

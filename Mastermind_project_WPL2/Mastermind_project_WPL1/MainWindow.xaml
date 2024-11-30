@@ -19,7 +19,8 @@
 
         <Button Name="checkButton" Content="Check code" HorizontalAlignment="Left" Height="30" Margin="196,383,0,0" VerticalAlignment="Top" Width="334" Click="checkButton_Click"/>
         <TextBox Name="debugTextBox" IsReadOnly="True" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" Background="LightGray" />
-        <ListBox Name="attemptsListBox" HorizontalAlignment="Left" Height="383" Margin="574,30,0,0" VerticalAlignment="Top" Width="216"/>
+        <ListBox Name="attemptsListBox" HorizontalAlignment="Left" Height="383" Margin="549,0,0,0" VerticalAlignment="Center" Width="216"/>
+        <Label Name="scoreLabel" Content="" HorizontalAlignment="Left" Margin="18,30,0,0" VerticalAlignment="Top" Height="19" Width="132"/>
 
     </Grid>
 </Window>
