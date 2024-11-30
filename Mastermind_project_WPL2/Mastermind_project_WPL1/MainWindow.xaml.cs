@@ -55,6 +55,9 @@ namespace Mastermind_project_WPL1
             // Sneltoets voor debug-modus
             this.KeyDown += MainWindow_KeyDown;
 
+            this.Closing += MainWindow_Closing;
+
+
             // Start de timer bij de eerste codegeneratie
             startCountdown();
         }
@@ -78,6 +81,25 @@ namespace Mastermind_project_WPL1
             debugMode = !debugMode;
             debugTextBox.Visibility = debugMode ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // Vraag bevestiging
+            MessageBoxResult result = MessageBox.Show(
+                "Weet je zeker dat je het spel wilt beëindigen?",
+                "Applicatie afsluiten",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning
+            );
+
+            // Controleer de keuze van de gebruiker
+            if (result == MessageBoxResult.No)
+            {
+                // Annuleer het sluitproces
+                e.Cancel = true;
+            }
+        }
+
 
         // Methode om random kleurencode te genereren
         private string generateRandomColorCode()
