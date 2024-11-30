@@ -139,6 +139,31 @@ namespace Mastermind_project_WPL1
             bool[] correctPositions = new bool[4];
             Array.Fill(correctPositions, false);
 
+            // Feedback berekenen
+            int correctPosition = 0;
+            int correctColor = 0;
+            bool[] matched = new bool[4];
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (selectedColors[i] == targetColors[i])
+                {
+                    correctPosition++;
+                    matched[i] = true;
+                }
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (!matched[i] && targetColors.Contains(selectedColors[i]) && selectedColors[i] != targetColors[i])
+                {
+                    correctColor++;
+                }
+            }
+
+            // Voeg poging toe aan de lijst
+            addAttemptToList(selectedColors, correctPosition, correctColor);
+
             // Controleer de geselecteerde kleuren en pas de randkleur aan
             updateBorder(label1, selectedColors[0], targetColors, 0, ref correctPositions);
             updateBorder(label2, selectedColors[1], targetColors, 1, ref correctPositions);
@@ -151,6 +176,13 @@ namespace Mastermind_project_WPL1
 
             // Start de timer opnieuw bij een poging
             startCountdown();
+        }
+
+        private void addAttemptToList(string[] selectedColors, int correctPosition, int correctColor)
+        {
+            // Voeg poging en feedback toe aan de ListBox
+            string attempt = $"Poging {attempts}: {string.Join(", ", selectedColors)} | Rood: {correctPosition} | Wit: {correctColor}";
+            attemptsListBox.Items.Add(attempt);
         }
 
         // Methode om de randen de juiste kleur te geven op basis van de ingevulde kleur

@@ -19,6 +19,7 @@
 
         <Button Name="checkButton" Content="Check code" HorizontalAlignment="Left" Height="30" Margin="196,383,0,0" VerticalAlignment="Top" Width="334" Click="checkButton_Click"/>
         <TextBox Name="debugTextBox" IsReadOnly="True" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" Background="LightGray" />
+        <ListBox Name="attemptsListBox" HorizontalAlignment="Left" Height="383" Margin="574,30,0,0" VerticalAlignment="Top" Width="216"/>
 
     </Grid>
 </Window>
